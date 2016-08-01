@@ -14,6 +14,9 @@ function Controller(model, view) {
 	self.view.bind('showActive', self.view.showActive);
 	self.view.bind('showCompleted', self.view.showCompleted);
 	self.view.bind('clearCompleted', self.clearCompleted.bind(self));
+	self.view.bind('signShow', self.signShow);
+	self.view.bind('signHide',self.signHide);
+
 }
 
 /**
@@ -23,8 +26,12 @@ function Controller(model, view) {
  */
 Controller.prototype.addItem = function(title) {
 	var self = this;
-	// self.model.create(title, self.view.addItem);
-	self.model.create(title, function(newTodoItem) {
+	if (!title.trim()) {
+		alert('对不起，输入不能为空字符串');
+		return;
+	} 
+
+	self.model.create(title.trim(), function(newTodoItem) {
 		var todoItem = self.view.addItem(newTodoItem);
 		// console.log(todoItem);
 		self.view.bind('deleteItem', self.deleteItem.bind(self) , todoItem); // 创建节点后立即绑定删除事件
@@ -74,7 +81,6 @@ Controller.prototype.setCompleted = function (dom) {
  */
 Controller.prototype.initView = function() {
 	var self = this;
-
 	var todos = self.model.findAll(); // todo对象的数组
   
   for (var i = 0; i < todos.length; i++) {
@@ -93,15 +99,46 @@ Controller.prototype.clearCompleted = function ()　{
 	self.view.deleteCompleted();
 }
 
+Controller.prototype.signShow = function () {
+	document.getElementById('sign').onmouseover = function () {
+		// console.log('over');
+		this.className = 'signShow';
+	}
+
+	document.body.onmousemove = function (event) {
+		var e = event || window.event;
+
+		if (e.pageY >= 0 && e.pageY <= 10)  {
+			document.getElementById('sign').className = 'signShow';
+		}/*else if(e.pageY>document.getElementById('sign').offsetHeight){
+			window.setTimeout(function(){
+				document.getElementById('sign').className = 'signHidden';
+			},500);
+		}*/
+	}
+}
+
+Controller.prototype.signHide = function () {
+	document.getElementById('sign').onmouseout =function () {
+
+		self = this;
+		// console.log('out');
+		// window.setTimeout(function(){
+			self.className = 'signHidden';
+		// },500);
+	}
+}
+
 /**
- * 测试
+ * 开始
  * 
  */
-function test(){
+function start(){
 	var storage = new Storage('TodoMVC-JS');
 	var model = new Model(storage);
 	var view = new View();
 	var controller = new Controller(model, view);
+	
 	controller.initView();
 }
-test(); // 执行测试
+start(); // 

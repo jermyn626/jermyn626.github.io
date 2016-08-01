@@ -47,6 +47,8 @@ Model.prototype.update = function (id, updatedTodo) {
 
 /**
  * 查找全部todo数据
+ *
+ * @return {Array} todos
  */
 Model.prototype.findAll = function () {
 	var todos = this.storage.findAll();

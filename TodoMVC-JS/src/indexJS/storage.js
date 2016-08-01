@@ -5,15 +5,20 @@
  */
 function Storage(name) {
 	this.dbName = name;
-
-	if(!localStorage[name]) {
+	if (!localStorage[name]) {
 		var data = {
-			'todos':[]
+			'anybody':[]
 		};
 
 		localStorage[name] = JSON.stringify(data);
 	}
 
+	this.userName = location.hash.substr(1);
+	if (location.hash.substr(1) === '') {
+		this.userName = 'anybody';
+	}
+	console.log(this.userName);
+  // location.hash = '';
 }
 
 /**
@@ -23,7 +28,10 @@ function Storage(name) {
  */
 Storage.prototype.add = function (newTodoItem) {
 	var data = JSON.parse(localStorage[this.dbName]);
-	var todos = data.todos;
+	if (data[this.userName] === undefined) {
+		data[this.userName] = [];
+	}
+	var todos = data[this.userName];
 	todos.push(newTodoItem);
 
 	localStorage[this.dbName] = JSON.stringify(data);
@@ -36,7 +44,10 @@ Storage.prototype.add = function (newTodoItem) {
  */
 Storage.prototype.delete = function (id) {
 	var data = JSON.parse(localStorage[this.dbName]);
-	var todos = data.todos;
+	// if (data[this.userName] === undefined) {
+	// 	data[this.userName] = [];
+	// }
+	var todos = data[this.userName];
 	for (var i = 0; i < todos.length; i++) {
 		if(todos[i].id == id) {
 			todos.splice(i,1);
@@ -55,7 +66,10 @@ Storage.prototype.delete = function (id) {
  */
 Storage.prototype.update = function (id, updatedTodo) {
 	var data = JSON.parse(localStorage[this.dbName]);
-	var todos = data.todos;
+	// if (data[this.userName] === undefined) {
+	// 	data[this.userName] = [];
+	// }
+	var todos = data[this.userName];
 	for (var i = 0; i < todos.length; i++) {
 		if (todos[i].id == id) {
 			todos[i] = updatedTodo;
@@ -72,7 +86,11 @@ Storage.prototype.update = function (id, updatedTodo) {
  */
 Storage.prototype.findAll = function () {
 	var data = JSON.parse(localStorage[this.dbName]);
-	var todos = data.todos;
+	if (data[this.userName] === undefined) {
+		data[this.userName] = [];
+	}
+	var todos = data[this.userName];
+	console.log(todos);
 	return todos;
 } 
 
@@ -81,7 +99,10 @@ Storage.prototype.findAll = function () {
  */
 Storage.prototype.deleteCompleted = function () {
 	var data = JSON.parse(localStorage[this.dbName]);
-	var todos = data.todos;
+	// if (data[this.userName] === undefined) {
+	// 	data[this.userName] = [];
+	// }
+	var todos = data[this.userName];
   var newTodos = [];
 	for (var i = 0; i < todos.length; i++) {
 		// console.log(todos[i].completed); // Boolean值
@@ -89,8 +110,7 @@ Storage.prototype.deleteCompleted = function () {
 				newTodos.push(todos[i]);
 		}
 	}
-	var newData = {
-		'todos':newTodos
-	}
+	var newData = {};
+	newData[this.userName] = newTodos;
 	localStorage[this.dbName] = JSON.stringify(newData);
 }

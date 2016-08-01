@@ -3,8 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>todoMVC-JavaScript</title>
+	<link rel="stylesheet" href="src/css/html.css">
 </head>
 <body>
+	<div id="sign" class = "signHidden">
+		<a id="signA" href="src/sign.html">sign in</a>
+	</div>
+
 	<h1>TodoMVC</h1>
 	<input id="todoWriteTxt" type="text" placeholder="what will you do?">
 	<button id="todoWriteConfirmButton">confirm</button>
@@ -20,9 +25,9 @@
 		<a href="#" id="showCompleted">Completed</a>
 		<a href="#" id="clearCompleted">clearCompleted</a>
 	</div>
-  <script src="js/view.js"></script>
-  <script src="js/storage.js"></script>
-	<script src="js/model.js"></script>
-	<script src="js/controller.js"></script>
+  <script src="src/indexJS/view.js"></script>
+  <script src="src/indexJS/storage.js"></script>
+	<script src="src/indexJS/model.js"></script>
+	<script src="src/indexJS/controller.js"></script>
 </body>
 </html>

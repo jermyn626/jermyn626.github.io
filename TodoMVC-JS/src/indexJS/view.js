@@ -53,6 +53,10 @@ View.prototype.bind = function(event, handler, dom) {
 		clearCompleted_a.onclick = function () {
 			handler();
 		}
+	} else if (event == 'signShow') {
+			handler();
+	} else if (event == 'signHide') {
+		handler();
 	} 
 };
 
@@ -83,7 +87,7 @@ View.prototype.addItem = function(newTodoItem) {
 	item.appendChild(checkbox);
 	item.appendChild(label);
 	item.appendChild(button);
-
+	item.style.height = 'auto';
 	var todos = document.getElementById('todos');
 	todos.appendChild(item);
 
@@ -95,7 +99,6 @@ View.prototype.addItem = function(newTodoItem) {
 		label.style.textDecoration = 'none';
 		label.style.color = 'black';	
 	}
-	
   return item;
 }
 
