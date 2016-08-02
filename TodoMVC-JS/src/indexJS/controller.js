@@ -16,6 +16,8 @@ function Controller(model, view) {
 	self.view.bind('clearCompleted', self.clearCompleted.bind(self));
 	self.view.bind('signShow', self.signShow);
 	self.view.bind('signHide',self.signHide);
+	self.view.bind('setSign',self.setSign.bind(self));
+	
 
 }
 
@@ -126,6 +128,19 @@ Controller.prototype.signHide = function () {
 		// window.setTimeout(function(){
 			self.className = 'signHidden';
 		// },500);
+	}
+}
+
+Controller.prototype.setSign = function () {
+	var self = this;
+	var signA = document.getElementById('signA');
+
+	if (self.model.storage.userName == 'anybody') {
+		signA.innerHTML = 'sign in';
+		signA.href = 'src/sign.html';
+	} else {
+		signA.innerHTML = 'sign out';
+		signA.href = 'index.html';
 	}
 }
 

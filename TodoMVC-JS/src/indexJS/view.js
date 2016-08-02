@@ -57,7 +57,9 @@ View.prototype.bind = function(event, handler, dom) {
 			handler();
 	} else if (event == 'signHide') {
 		handler();
-	} 
+	} else if (event == 'setSign') {
+		handler();
+	}
 };
 
 /**
