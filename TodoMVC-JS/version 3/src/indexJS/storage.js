@@ -34,8 +34,7 @@ Storage.prototype.add = function (newTodoItem) {
  * @param {String} id 要删除的todo的id值
  */
 Storage.prototype.delete = function (id) {
-	var data = JSON.parse(localStorage[this.dbName]);
-
+	// var data = JSON.parse(localStorage[this.dbName]);
 	// var todos = data[this.userName];
 	// for (var i = 0; i < todos.length; i++) {
 	// 	if(todos[i].id == id) {
